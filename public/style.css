@@ -102,9 +102,21 @@ button:disabled {
 
 .theme-options {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 20px 0;
+  flex-wrap: wrap; /* ⬅️ Biar tombol pindah baris saat sempit */
+  gap: 10px; /* Jarak antar tombol */
+  justify-content: center; /* Tombol di tengah */
+  padding: 10px;
+}
+
+.themeBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff6a88, #ff9350);
+  color: #fff;
+  white-space: nowrap; /* Biar teks tidak turun baris */
 }
 
 @media (min-width: 480px) {
@@ -129,4 +141,13 @@ button:disabled {
 #upload-area input[type="file"] {
   margin-top: 4px;
   width: 100%;
+}
+
+#webcam {
+  transform: scaleX(-1);
+}
+
+/* Jika ingin preview juga mirror */
+#previewImg {
+  transform: scaleX(-1);
 }
