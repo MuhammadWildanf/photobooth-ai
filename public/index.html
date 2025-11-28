@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Photobooth AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="app">
+    <h2>Photobooth AI</h2>
+
+    <!-- STEP 1: START -->
+    <section id="stepStart" class="step active">
+      <p>Mulai pengalaman Photobooth.</p>
+      <button id="startBtn">Start</button>
+    </section>
+
+    <!-- STEP 2: THEME CHOICE -->
+    <section id="stepTheme" class="step">
+      <h3>Pilih Tema</h3>
+      <div class="theme-options">
+        <button class="themeBtn" data-theme="hero">Hero</button>
+        <button class="themeBtn" data-theme="contestant">Contestant</button>
+        <button class="themeBtn" data-theme="frontman">Frontman</button>
+        <button class="themeBtn" data-theme="group">Group</button>
+      </div>
+      <p id="themeInfo"></p>
+    </section>
+
+    <!-- STEP 3: CAPTURE -->
+    <section id="stepCapture" class="step">
+      <h3>Ambil Foto</h3>
+      <div class="video-frame">
+        <video id="webcam" autoplay playsinline></video>
+      </div>
+      <div class="controls">
+        <button id="captureBtn">Take Photo</button>
+      </div>
+      <div id="upload-area">
+        <p>Atau upload foto:</p>
+        <input type="file" id="imageInput" accept="image/*" />
+      </div>
+      <div id="preview">
+        <p>Preview:</p>
+        <div class="preview-frame">
+          <img id="previewImg" src="" />
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: LOADING -->
+    <section id="stepLoading" class="step">
+      <h3>Sedang memproses...</h3>
+      <p>Harap tunggu sebentar, kami sedang menghasilkan gambar.</p>
+    </section>
+
+    <!-- STEP 5: RESULT -->
+    <section id="stepResult" class="step">
+      <h3>Hasil</h3>
+      <div class="result-frame">
+        <img id="resultImg" src="" />
+      </div>
+      <div class="controls">
+        <button id="retakeBtn">Ambil Ulang</button>
+        <button id="restartBtn">Kembali ke Awal</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
