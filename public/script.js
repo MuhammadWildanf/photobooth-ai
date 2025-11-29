@@ -1,13 +1,13 @@
 const webcam = document.getElementById("webcam");
 const captureBtn = document.getElementById("captureBtn");
 const imageInput = document.getElementById("imageInput");
-const previewImg = document.getElementById("previewImg");
 const resultImg = document.getElementById("resultImg");
 const startBtn = document.getElementById("startBtn");
 const retakeBtn = document.getElementById("retakeBtn");
 const restartBtn = document.getElementById("restartBtn");
 const themeInfo = document.getElementById("themeInfo");
 const themeButtons = document.querySelectorAll(".themeBtn");
+const countdownEl = document.getElementById("countdown");
 
 const TARGET_WIDTH = 768;
 const TARGET_HEIGHT = 1344;
@@ -151,7 +151,6 @@ const resetApp = () => {
   selectedImageBase64 = null;
   selectedTheme = null;
   selectedPrompt = null;
-  previewImg.src = "";
   resultImg.src = "";
   themeInfo.textContent = "";
   captureBtn.disabled = false;
@@ -165,6 +164,33 @@ const pickPrompt = (theme) => {
   selectedPrompt = randomPrompt;
   themeInfo.textContent = `Tema ${theme} dipilih. Style dipilih secara acak.`;
 };
+
+
+function startCountdown() {
+  return new Promise((resolve) => {
+    const cd = document.getElementById("countdown");
+    let number = 3;
+
+    cd.classList.remove("hidden");
+    cd.classList.add("show");
+    cd.innerText = number;
+
+    const timer = setInterval(() => {
+      number--;
+      if (number === 0) {
+        // cd.innerText = "📸";
+      } else if (number < 0) {
+        clearInterval(timer);
+        cd.classList.add("hidden");
+        cd.classList.remove("show");
+        resolve();
+      } else {
+        cd.innerText = number;
+      }
+    }, 900);
+  });
+}
+
 
 const capturePortraitFrame = () => {
   if (!webcam.videoWidth || !webcam.videoHeight) return null;
@@ -267,11 +293,13 @@ themeButtons.forEach((btn) =>
   })
 );
 
-captureBtn.addEventListener("click", () => {
+captureBtn.addEventListener("click", async () => {
   if (!selectedTheme || !selectedPrompt) {
     alert("Pilih tema terlebih dahulu.");
     return;
   }
+
+  await startCountdown();
 
   let frame;
   if (selectedTheme === "group") {
@@ -292,7 +320,6 @@ captureBtn.addEventListener("click", () => {
     return;
   }
 
-  previewImg.src = frame.dataURL;
   selectedImageBase64 = frame.base64;
 
   requestGeneration();
@@ -316,7 +343,6 @@ imageInput.addEventListener("change", () => {
   const reader = new FileReader();
   reader.onload = (e) => {
     const dataURL = e.target.result;
-    previewImg.src = dataURL;
     selectedImageBase64 = dataURL.split(",")[1];
 
     // jika tema sudah dipilih, langsung kirim ke backend (otomatis)

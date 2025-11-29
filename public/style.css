@@ -32,7 +32,6 @@ h3 {
 }
 
 .video-frame,
-.preview-frame,
 .result-frame {
   width: 100%;
   border-radius: 16px;
@@ -48,19 +47,6 @@ h3 {
   object-fit: contain;
   background: #000;
   border-radius: 16px;
-}
-
-.preview-frame {
-  aspect-ratio: 768 / 1344;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.preview-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .result-frame {
@@ -147,7 +133,23 @@ button:disabled {
   transform: scaleX(-1);
 }
 
-/* Jika ingin preview juga mirror */
-#previewImg {
-  transform: scaleX(-1);
+.countdown {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 20px black;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.countdown.show {
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
 }
