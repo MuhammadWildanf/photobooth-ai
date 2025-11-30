@@ -1,28 +1,25 @@
-// drive.js
 import { google } from "googleapis";
-import stream from "stream";
-import { oauth2Client } from "./oauth.js";
+import { Readable } from "stream";
 
-export async function uploadToDrive(buffer, filename, folderId) {
-    const drive = google.drive({ version: "v3", auth: oauth2Client });
+export async function uploadToDrive(auth, buffer, fileName) {
+  const drive = google.drive({ version: "v3", auth });
 
-    const res = await drive.files.create({
-        requestBody: {
-            name: filename,
-            parents: [folderId],
-        },
-        media: {
-            mimeType: "image/png",
-            body: bufferToStream(buffer),
-        },
-        fields: "id",
-    });
+  // Convert buffer → readable stream
+  const bufferStream = new Readable();
+  bufferStream.push(buffer);
+  bufferStream.push(null);
 
-    return res.data.id;
-}
+  const response = await drive.files.create({
+    requestBody: {
+      name: fileName,
+      parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
+    },
+    media: {
+      mimeType: "image/png",
+      body: bufferStream, // ← stream, bukan buffer
+    },
+    fields: "id",
+  });
 
-function bufferToStream(buffer) {
-    const duplex = new stream.PassThrough();
-    duplex.end(buffer);
-    return duplex;
+  return response.data.id;
 }

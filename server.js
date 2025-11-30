@@ -6,17 +6,25 @@ import { GoogleGenAI } from "@google/genai";
 import sharp from "sharp";
 
 import { uploadToDrive } from "./drive.js";
-import { getAuthUrl, saveToken } from "./oauth.js"; // ← cukup ini saja
+import {
+  getAuthUrl,
+  saveToken,
+  oauth2Client,
+  loadSavedToken,
+} from "./oauth.js"; // ← cukup ini saja
 
 dotenv.config();
-
+loadSavedToken();
 const app = express();
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.static("public"));
 
-console.log("Loaded API Key:", process.env.GOOGLE_API_KEY?.slice(0, 10) + "...");
+console.log(
+  "Loaded API Key:",
+  process.env.GOOGLE_API_KEY?.slice(0, 10) + "..."
+);
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GOOGLE_API_KEY,
@@ -80,11 +88,11 @@ app.post("/generate", async (req, res) => {
       if (part.inlineData?.data) resultBase64 = part.inlineData.data;
     }
 
-    if (!resultBase64) return res.status(500).json({ error: "AI returned no image" });
+    if (!resultBase64)
+      return res.status(500).json({ error: "AI returned no image" });
 
     const sourceBuffer = Buffer.from(resultBase64, "base64");
 
-    // Resize if needed
     let finalBuffer =
       theme === "group"
         ? sourceBuffer
@@ -97,14 +105,10 @@ app.post("/generate", async (req, res) => {
             .toBuffer();
 
     const filename = `output_${Date.now()}.png`;
-    const filepath = path.join(outputDir, filename);
-
-    fs.writeFileSync(filepath, finalBuffer);
-    console.log("Saved image →", filepath);
 
     let driveFileId = null;
     try {
-      driveFileId = await uploadToDrive(finalBuffer, filename, process.env.GOOGLE_DRIVE_FOLDER_ID);
+      driveFileId = await uploadToDrive(oauth2Client, finalBuffer, filename);
     } catch (err) {
       console.error("UPLOAD DRIVE FAILED:", err);
     }
@@ -113,7 +117,9 @@ app.post("/generate", async (req, res) => {
       ok: true,
       filename,
       driveFileId,
-      driveUrl: driveFileId ? `https://drive.google.com/uc?id=${driveFileId}` : null,
+      driveUrl: driveFileId
+        ? `https://drive.google.com/uc?id=${driveFileId}`
+        : null,
       image: finalBuffer.toString("base64"),
     });
   } catch (err) {
