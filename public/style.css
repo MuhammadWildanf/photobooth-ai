@@ -102,6 +102,20 @@ button.btn-back.full {
   width: 100%;
 }
 
+button.btn-download {
+  background: #28a745; /* Bootstrap success green */
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: auto; /* Tidak full width jika mau */
+  padding: 10px 20px;
+}
+
+/* Jika mau full width tapi tetap green */
+button.btn-download.full {
+  width: 100%;
+}
+
 .theme-options {
   display: flex;
   flex-wrap: wrap; /* ⬅️ Biar tombol pindah baris saat sempit */

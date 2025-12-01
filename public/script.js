@@ -370,3 +370,19 @@ backCaptureBtn.addEventListener("click", () => {
   stepCapture.classList.remove("active");
   stepTheme.classList.add("active");
 });
+
+
+const downloadBtn = document.getElementById("downloadBtn");
+
+downloadBtn.addEventListener("click", () => {
+  const imgSrc = resultImg.src;
+  if (!imgSrc) return;
+
+  // Buat link sementara
+  const link = document.createElement("a");
+  link.href = imgSrc;
+  link.download = "photobooth.png"; // nama file yang akan di-download
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
