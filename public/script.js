@@ -5,7 +5,6 @@ const resultImg = document.getElementById("resultImg");
 const startBtn = document.getElementById("startBtn");
 const retakeBtn = document.getElementById("retakeBtn");
 const restartBtn = document.getElementById("restartBtn");
-const themeInfo = document.getElementById("themeInfo");
 const themeButtons = document.querySelectorAll(".themeBtn");
 const countdownEl = document.getElementById("countdown");
 
@@ -152,7 +151,6 @@ const resetApp = () => {
   selectedTheme = null;
   selectedPrompt = null;
   resultImg.src = "";
-  themeInfo.textContent = "";
   captureBtn.disabled = false;
   captureBtn.textContent = defaultCaptureLabel;
   showStep("start");
@@ -162,7 +160,6 @@ const pickPrompt = (theme) => {
   const styles = themes[theme];
   const randomPrompt = styles[Math.floor(Math.random() * styles.length)];
   selectedPrompt = randomPrompt;
-  themeInfo.textContent = `Tema ${theme} dipilih. Style dipilih secara acak.`;
 };
 
 
@@ -351,4 +348,25 @@ imageInput.addEventListener("change", () => {
     }
   };
   reader.readAsDataURL(file);
+});
+
+
+const stepStart = document.getElementById("stepStart");
+const stepTheme = document.getElementById("stepTheme");
+const stepCapture = document.getElementById("stepCapture");
+
+// tombol Back
+const backThemeBtn = document.getElementById("backThemeBtn");
+const backCaptureBtn = document.getElementById("backCaptureBtn");
+
+// kembali dari stepTheme ke stepStart
+backThemeBtn.addEventListener("click", () => {
+  stepTheme.classList.remove("active");
+  stepStart.classList.add("active");
+});
+
+// kembali dari stepCapture ke stepTheme
+backCaptureBtn.addEventListener("click", () => {
+  stepCapture.classList.remove("active");
+  stepTheme.classList.add("active");
 });

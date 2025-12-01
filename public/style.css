@@ -8,8 +8,9 @@ body {
 }
 
 .app {
-  width: 100%;
-  max-width: 420px;
+  width: 90%; /* Ambil 90% layar */
+  max-width: 768px; /* Maksimal tetap rapi di desktop */
+  margin: 0 auto; /* Center */
 }
 
 h2,
@@ -84,6 +85,21 @@ button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
+}
+
+/* Biarkan tombol Back tetap style Bootstrap */
+button.btn-back {
+  background: #6c757d; /* Bootstrap secondary gray */
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: auto; /* Tidak full width jika mau */
+  padding: 10px 20px;
+}
+
+/* Jika mau full width tapi tetap gray */
+button.btn-back.full {
+  width: 100%;
 }
 
 .theme-options {
