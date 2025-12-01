@@ -18,7 +18,7 @@ loadSavedToken();
 const app = express();
 
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use(express.static("public"));
 
 console.log(
@@ -97,12 +97,12 @@ app.post("/generate", async (req, res) => {
       theme === "group"
         ? sourceBuffer
         : await sharp(sourceBuffer)
-            .resize(768, 1344, {
-              fit: "contain",
-              background: { r: 0, g: 0, b: 0, alpha: 1 },
-            })
-            .png()
-            .toBuffer();
+          .resize(768, 1344, {
+            fit: "contain",
+            background: { r: 0, g: 0, b: 0, alpha: 1 },
+          })
+          .png()
+          .toBuffer();
 
     const filename = `output_${Date.now()}.png`;
 
