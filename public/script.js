@@ -25,7 +25,16 @@ const showStep = (name) => {
   steps[name].classList.add("active");
 };
 
+
 const themes = {
+  new: [
+    `A hyper-realistic, full-body portrait of a Asian industrial engineer standing in the center of a futuristic, eco-friendly energy park. Wearing a clean blue industrial jumpsuit, a high-visibility orange and highly silver reflective safety harness, white safety gloves, black combat boots, and a white hard hat featuring the corporate logo provided in the second reference image (local pertamina.png) (right pertamina logo) "PETAMINA" text. Stands with hands on his hips in a heroic pose. The body pose is slightly rotate to the left, while the face remain make a contact to camera.
+
+The background features a "Solarpunk" utopian setting with lush green terraced gardens, advanced circular solar panels, and futuristic glass bio-domes. A large, glowing blue energy spire towers in the distance. There are drones hovering in the blue sky. The ground features water canals bordered by glowing neon blue light strips and crystalline energy formations. The lighting is bright and sunny, cinematic, and vibrant, with a high-definition 3D render aesthetic like Unreal Engine 5.
+
+Camera : Full body shot with tight head room
+Lighting : Bright keylight with tungsten rim light from sun light`,
+  ],
   hero: [
     `A product photography style image featuring two main objects on a clean, slightly reflective black or dark grey surface, typical of product photography for action figures.
     On the right side of the frame, there is a full body shot of the provided subject, rendered as a premium collectible action figure. The figure is depicted with every detail of their facial features, proportions, and expressions perfectly preserved from the reference image—no alterations to eyes, nose, mouth, or facial structure. Crucially, all facial accessories, including any hijab, veil, or head covering, and any type of glasses or eyewear worn by the subject in the reference image, must be perfectly maintained and integrated into the final image, appearing as sculpted plastic components. Maintain the identical body proportions and stature as in the reference image, rendered with the distinct, articulated appearance of an action figure. Maintain the identical skin tone, texture, and facial lighting, but applied to a matte plastic finish. The figure stands on a black base with the "Avengers: Endgame" logo, similar to the reference image.
@@ -386,3 +395,53 @@ downloadBtn.addEventListener("click", () => {
   link.click();
   document.body.removeChild(link);
 });
+
+
+// idle
+
+// let idleTime = 0;
+// const idleLimit = 30; // detik sebelum idle
+
+// function resetIdleTimer() {
+//   idleTime = 0;
+// }
+
+// window.addEventListener('mousemove', resetIdleTimer);
+// window.addEventListener('keydown', resetIdleTimer);
+// window.addEventListener('click', resetIdleTimer);
+// window.addEventListener('touchstart', resetIdleTimer);
+
+// const idleOverlay = document.createElement('div');
+// idleOverlay.id = 'idleOverlay';
+// idleOverlay.style.position = 'fixed';
+// idleOverlay.style.top = 0;
+// idleOverlay.style.left = 0;
+// idleOverlay.style.width = '100%';
+// idleOverlay.style.height = '100%';
+// idleOverlay.style.background = 'rgba(0,0,0,0.85)';
+// idleOverlay.style.color = '#fff';
+// idleOverlay.style.display = 'none';
+// idleOverlay.style.flexDirection = 'column';
+// idleOverlay.style.justifyContent = 'center';
+// idleOverlay.style.alignItems = 'center';
+// idleOverlay.style.zIndex = 9999;
+// idleOverlay.style.fontSize = '1.5rem';
+// idleOverlay.innerHTML = `
+//     <p>Anda idle, klik tombol untuk kembali ke awal.</p>
+//     <button id="idleBackBtn" class="btn btn-primary mt-3">Kembali ke Awal</button>
+//   `;
+// document.body.appendChild(idleOverlay);
+
+// document.getElementById('idleBackBtn').addEventListener('click', () => {
+//   idleOverlay.style.display = 'none';
+//   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+//   document.getElementById('stepStart').classList.add('active');
+//   idleTime = 0;
+// });
+
+// setInterval(() => {
+//   idleTime++;
+//   if (idleTime >= idleLimit) {
+//     idleOverlay.style.display = 'flex';
+//   }
+// }, 1000);

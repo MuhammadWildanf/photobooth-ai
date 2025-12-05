@@ -1,5 +1,4 @@
 import express from "express";
-import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
@@ -12,6 +11,11 @@ import {
   oauth2Client,
   loadSavedToken,
 } from "./oauth.js"; // ← cukup ini saja
+
+import fs from "fs";
+
+const pertaminaLogo = fs.readFileSync("./public/pertamina.png");
+const pertaminaLogoBase64 = pertaminaLogo.toString("base64");
 
 dotenv.config();
 loadSavedToken();
@@ -76,6 +80,13 @@ app.post("/generate", async (req, res) => {
           data: image,
         },
       },
+      {
+        // Logo Pertamina dari local
+        inlineData: {
+          mimeType: "image/png",
+          data: pertaminaLogoBase64
+        }
+      }
     ];
 
     const response = await ai.models.generateContent({
